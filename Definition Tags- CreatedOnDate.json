@@ -26,7 +26,7 @@
                     "if": {
                       "allOf": [
                         {
-                          "field": "tags['CreatedOnDate']",
+                          "field": "tags['Date']",
                           "exists": "false"
                         }
                       ]
@@ -35,7 +35,7 @@
                       "effect": "append",
                       "details": [
                         {
-                          "field": "tags['CreatedOnDate']",
+                          "field": "tags['Date']",
                           "value": "[concat(substring(utcNow(),5,2),'/', substring(utcNow(),8,2),'/',substring(utcNow(),0,4),'-',substring(utcNow(),11,8))]"
                         }
                       ]
