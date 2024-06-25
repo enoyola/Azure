@@ -5,6 +5,10 @@
         "rbacGuid": {
             "type": "string",
             "defaultValue": "[newGuid()]"
+        },
+        "utcShort": {
+            "type": "string",
+            "defaultValue": "[utcNow('g')]"
         }
     },
     "variables": {
@@ -26,7 +30,7 @@
                     "if": {
                       "allOf": [
                         {
-                          "field": "tags['Date']",
+                          "field": "tags['CreatedOnDate']",
                           "exists": "false"
                         }
                       ]
@@ -36,7 +40,7 @@
                       "details": [
                         {
                           "field": "tags['Date']",
-                          "value": "[concat(substring(utcNow(),5,2),'/', substring(utcNow(),8,2),'/',substring(utcNow(),0,4),'-',substring(utcNow(),11,8))]"
+                          "value": "[parameters('utcShort')]"
                         }
                       ]
                     }
