@@ -8,8 +8,8 @@
         }
     },
     "variables": {
-        "policyDefinitionName": "Policy-to-assign-the-CreatedOnDate-tag",
-        "policyAssignmentName": "Policy-to-assign-the-CreatedOnDate-tag",
+        "policyDefinitionName": "Tags-Def",
+        "policyAssignmentName": "Tags-Assig",
         "rbacContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c"
     },
     "resources": [
