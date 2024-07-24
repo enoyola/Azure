@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rbacGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]"
+        },
+        "utcShort": {
+            "type": "string",
+            "defaultValue": "[utcNow('g')]"
+        }
+    },
+    "variables": {
+        "policyDefinitionName": "Tags-Def",
+        "policyAssignmentName": "Tags-Assig",
+        "rbacContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policyDefinitions",
+            "apiVersion": "2018-03-01",
+            "name": "[variables('policyDefinitionName')]",
+            "properties": {
+                "description": "Policy to specify the CreatedOnDate tag",
+                "displayName": "Policy to specify the CreatedOnDate tag",
+                "policyType": "Custom",
+                "mode": "All",
+                "policyRule": {
+                    "if": {
+                      "field": "tags",
+                      "notContainsKey": "Environment"
+                    },
+                    "then": {
+                      "effect": "modify",
+                      "details": {
+                        "operations": [
+                          {
+                            "operation": "addOrReplace",
+                            "field": "tags.Environment",
+                            "value": "DEV"
+                          },
+                          {
+                            "operation": "addOrReplace",
+                            "field": "tags.Department",
+                            "value": "SSG"
+                          }
+                        ]
+                      }
+                    }
+                  }
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentName')]",
+            "location": "[deployment().location]",
+            "dependsOn": [
+                "[variables('policyDefinitionName')]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "description": "[variables('policyAssignmentName')]",
+                "displayName": "[variables('policyAssignmentName')]",
+                "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionName'))]",
+                "scope": "[subscription().id]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[parameters('rbacGuid')]",
+            "dependsOn": [
+                "[variables('policyAssignmentName')]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacContributor'))]",
+                "principalType": "ServicePrincipal",
+                "delegatedManagedIdentityResourceId": "[if(not(empty(subscription().managedByTenants)), concat(subscription().id, '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentName')), json('null'))]",
+                "principalId": "[toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentName')), '2018-05-01', 'Full' ).identity.principalId)]"
+            }
+        }
+    ]
+}
