@@ -5,15 +5,11 @@
         "rbacGuid": {
             "type": "string",
             "defaultValue": "[newGuid()]"
-        },
-        "utcShort": {
-            "type": "string",
-            "defaultValue": "[utcNow('g')]"
         }
     },
     "variables": {
-        "policyDefinitionName": "Tags-Def",
-        "policyAssignmentName": "Tags-Assig",
+        "policyDefinitionName": "MultipleTags-Def",
+        "policyAssignmentName": "MultipleTags-Assig",
         "rbacContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c"
     },
     "resources": [
@@ -22,8 +18,8 @@
             "apiVersion": "2018-03-01",
             "name": "[variables('policyDefinitionName')]",
             "properties": {
-                "description": "Policy to specify the CreatedOnDate tag",
-                "displayName": "Policy to specify the CreatedOnDate tag",
+                "description": "Policy for MultipleTags",
+                "displayName": "Policy for MultipleTags",
                 "policyType": "Custom",
                 "mode": "All",
                 "policyRule": {
