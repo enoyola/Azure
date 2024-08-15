@@ -18,8 +18,8 @@
             "apiVersion": "2018-03-01",
             "name": "[variables('policyDefinitionName')]",
             "properties": {
-                "description": "Policy for MultipleTags",
-                "displayName": "Policy for MultipleTags",
+                "description": "Policy for MultipleTags ARM",
+                "displayName": "Policy for MultipleTags ARM",
                 "policyType": "Custom",
                 "mode": "All",
                 "policyRule": {
