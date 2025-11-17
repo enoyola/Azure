@@ -1,0 +1,58 @@
+# Copy this file to terraform.tfvars and update with your values
+
+client_name = "acmecorp"
+environment = "prod"
+location    = "eastus"
+
+tags = {
+  CostCenter = "IT"
+  Owner      = "Network Team"
+  Project    = "Hub-Spoke-Network"
+}
+
+# Hub Network
+hub_vnet_address_space = ["10.0.0.0/16"]
+
+# Spoke Networks
+spoke_vnets = {
+  production = {
+    address_space = ["10.1.0.0/16"]
+    subnets = {
+      web  = { address_prefix = "10.1.1.0/24" }
+      app  = { address_prefix = "10.1.2.0/24" }
+      data = { address_prefix = "10.1.3.0/24" }
+    }
+  }
+  development = {
+    address_space = ["10.2.0.0/16"]
+    subnets = {
+      web  = { address_prefix = "10.2.1.0/24" }
+      app  = { address_prefix = "10.2.2.0/24" }
+      data = { address_prefix = "10.2.3.0/24" }
+    }
+  }
+  shared = {
+    address_space = ["10.3.0.0/16"]
+    subnets = {
+      monitoring = { address_prefix = "10.3.1.0/24" }
+      backup     = { address_prefix = "10.3.2.0/24" }
+    }
+  }
+}
+
+# Azure Firewall
+deploy_firewall   = true
+firewall_sku_tier = "Standard"
+
+# Azure Bastion
+deploy_bastion = true
+bastion_sku    = "Basic"
+
+# VPN Gateway
+deploy_vpn_gateway = false
+vpn_gateway_sku    = "VpnGw1"
+vpn_type           = "RouteBased"
+
+# Peering
+allow_gateway_transit = true
+use_remote_gateways   = true

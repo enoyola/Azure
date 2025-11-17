@@ -1,0 +1,37 @@
+# Copy this file to terraform.tfvars and update with your values
+
+client_name = "acmecorp"
+environment = "dev"
+location    = "eastus"
+
+tags = {
+  CostCenter = "IT"
+  Owner      = "Infrastructure Team"
+}
+
+# Networking
+vnet_address_space = ["10.0.0.0/16"]
+subnet_prefixes = {
+  web     = "10.0.1.0/24"
+  app     = "10.0.2.0/24"
+  data    = "10.0.3.0/24"
+  gateway = "10.0.4.0/24"
+}
+
+# Virtual Machine
+deploy_vm      = false
+vm_size        = "Standard_B2s"
+admin_username = "azureadmin"
+
+# Storage
+deploy_storage           = true
+storage_account_tier     = "Standard"
+storage_replication_type = "LRS"
+
+# Database
+deploy_database = false
+database_type   = "sql"
+
+# App Service
+deploy_app_service = false
+app_service_sku    = "B1"
