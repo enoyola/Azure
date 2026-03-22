@@ -1,5 +1,9 @@
+locals {
+  location_token = lower(replace(replace(var.location, " ", ""), "_", ""))
+}
+
 resource "azurerm_public_ip" "firewall" {
-  name                = "${var.firewall_name}-pip"
+  name                = "pip-${var.firewall_name}-${local.location_token}-001"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"
@@ -58,7 +62,7 @@ resource "azurerm_firewall_application_rule_collection" "default" {
   rule {
     name             = "AllowWindowsUpdate"
     source_addresses = ["*"]
-    
+
     target_fqdns = [
       "*.windowsupdate.microsoft.com",
       "*.update.microsoft.com",
@@ -79,7 +83,7 @@ resource "azurerm_firewall_application_rule_collection" "default" {
   rule {
     name             = "AllowAzureServices"
     source_addresses = ["*"]
-    
+
     target_fqdns = [
       "*.azure.com",
       "*.microsoft.com"

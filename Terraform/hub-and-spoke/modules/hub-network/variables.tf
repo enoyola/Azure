@@ -3,6 +3,11 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "network_name" {
+  description = "CAF naming token for the hub network resources"
+  type        = string
+}
+
 variable "location" {
   description = "Azure region"
   type        = string

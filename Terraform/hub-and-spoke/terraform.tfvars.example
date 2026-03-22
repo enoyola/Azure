@@ -1,6 +1,6 @@
 # Copy this file to terraform.tfvars and update with your values
 
-client_name = "acmecorp"
+client_name = "x"
 environment = "prod"
 location    = "eastus"
 
@@ -41,11 +41,11 @@ spoke_vnets = {
 }
 
 # Azure Firewall
-deploy_firewall   = true
+deploy_firewall   = false
 firewall_sku_tier = "Standard"
 
 # Azure Bastion
-deploy_bastion = true
+deploy_bastion = false
 bastion_sku    = "Basic"
 
 # VPN Gateway

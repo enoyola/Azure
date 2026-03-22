@@ -20,7 +20,7 @@ resource "azurerm_linux_web_app" "this" {
     always_on = var.always_on
 
     application_stack {
-      node_version = var.runtime_stack == "node" ? var.runtime_version : null
+      node_version   = var.runtime_stack == "node" ? var.runtime_version : null
       python_version = var.runtime_stack == "python" ? var.runtime_version : null
       dotnet_version = var.runtime_stack == "dotnet" ? var.runtime_version : null
     }

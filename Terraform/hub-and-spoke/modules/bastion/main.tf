@@ -1,5 +1,9 @@
+locals {
+  location_token = lower(replace(replace(var.location, " ", ""), "_", ""))
+}
+
 resource "azurerm_public_ip" "bastion" {
-  name                = "${var.bastion_name}-pip"
+  name                = "pip-${var.bastion_name}-${local.location_token}-001"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"

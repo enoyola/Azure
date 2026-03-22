@@ -5,7 +5,7 @@ resource "azurerm_storage_account" "this" {
   account_tier             = var.account_tier
   account_replication_type = var.account_replication_type
   min_tls_version          = "TLS1_2"
-  
+
   blob_properties {
     delete_retention_policy {
       days = 7

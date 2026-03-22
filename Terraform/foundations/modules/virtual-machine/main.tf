@@ -3,8 +3,12 @@ resource "random_password" "admin_password" {
   special = true
 }
 
+locals {
+  location_token = lower(replace(replace(var.location, " ", ""), "_", ""))
+}
+
 resource "azurerm_network_interface" "this" {
-  name                = "${var.vm_name}-nic"
+  name                = "nic-01-${var.vm_name}-${local.location_token}-001"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -21,7 +25,7 @@ resource "azurerm_network_interface" "this" {
 resource "azurerm_public_ip" "this" {
   count = var.enable_public_ip ? 1 : 0
 
-  name                = "${var.vm_name}-pip"
+  name                = "pip-${var.vm_name}-${local.location_token}-001"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"

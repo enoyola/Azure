@@ -1,3 +1,7 @@
+locals {
+  location_token = lower(replace(replace(var.location, " ", ""), "_", ""))
+}
+
 resource "azurerm_virtual_network" "spoke" {
   name                = var.vnet_name
   location            = var.location
@@ -9,7 +13,7 @@ resource "azurerm_virtual_network" "spoke" {
 resource "azurerm_subnet" "subnets" {
   for_each = var.subnets
 
-  name                 = "${var.spoke_name}-${each.key}-subnet"
+  name                 = "snet-${var.spoke_name}-${lower(replace(replace(each.key, " ", "-"), "_", "-"))}-${local.location_token}-001"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.spoke.name
   address_prefixes     = [each.value.address_prefix]
@@ -18,7 +22,7 @@ resource "azurerm_subnet" "subnets" {
 resource "azurerm_network_security_group" "nsg" {
   for_each = var.subnets
 
-  name                = "${var.vnet_name}-${each.key}-nsg"
+  name                = "nsg-${var.spoke_name}-${lower(replace(replace(each.key, " ", "-"), "_", "-"))}-${local.location_token}-001"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = var.tags
